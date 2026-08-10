@@ -643,9 +643,13 @@ notifications: {
 | Notification | Trigger | Recipients |
 |---|---|---|
 | New Quote Created | A quote is created in Heritage+ for the first time from GiddyUp | Assigned TM |
+| New Quote Created – 24-Hour Reminder | 24 hours after the quote is shared with the customer (Approve & Share) | Assigned TM |
 | Quote Rejected | A TM or CS user rejects the quote | The GiddyUp user who created the quote |
 | Quote Shared with Customer | Approve & Share | Customer(s) on the quote |
+| Quote Shared with Customer – 24-Hour Reminder | 24 hours after the initial Quote Shared with Customer email, if the customer hasn't yet received the quote in Heritage+ | Customer(s) on the quote |
 | Change Request Updates | Customer submits an item change request | Customer |
+| Customer Requested Changes | Customer submits an item change request | Assigned TM |
+| Customer Requested Changes – Reminder | Every 24 hours after the Customer Requested Changes email, for up to 3 reminders, as long as the TM hasn't addressed the request | Assigned TM |
 | Customer Applied Changes | An Auto-Approve Modifications session closes | Assigned TM |
 | Customer Received Quote | Customer receives (and optionally commits/awards) the quote | Assigned TM |
 | Quote Received – Inactive/Misc Items | An Agility Quote is received while it still contains an invalid or miscellaneous item | Assigned TM |
@@ -655,6 +659,12 @@ notifications: {
 | Order Approved | TM approves a pending sales order | Customer(s) on the quote |
 | Order Cancelled | A pending order is cancelled, by either the customer or the TM | Customer(s) on the quote, Assigned TM |
 | Extend Expiration Request | Customer requests an extension on an expired quote | Assigned TM |
+
+For the **New Quote Created – 24-Hour Reminder**: this fires off the Quote Shared with Customer timestamp, not the original New Quote Created send — so it only goes out on quotes that have actually been shared.
+
+For the **Quote Shared with Customer – 24-Hour Reminder**: this checks receipt status in Heritage+, not whether the email itself was opened — once the customer has received the quote, the reminder is skipped even if the 24-hour mark passes.
+
+For the **Customer Requested Changes** notification: it's the TM/IS-facing counterpart to Change Request Updates — same trigger, but routed to the Assigned TM (and IS) instead of the Customer. It escalates with a reminder every 24 hours, capped at 3, and stops as soon as the TM addresses the request.
 
 For the **Customer Applied Changes** notification specifically: it's session-based rather than per-change — see <a href="#/negotiation">Part 7</a> for how a modifications session opens and closes. For the **Pending Sales Order** notifications, see <a href="#/release-and-purchase">Part 9</a> for the full workflow those emails are attached to.`
 },
